@@ -1,0 +1,16 @@
+cmake_minimum_required(VERSION 3.16)
+project(property_collector LANGUAGES CXX)
+
+add_executable(property_collector main.cpp)
+target_compile_features(property_collector PRIVATE cxx_std_17)
+set_target_properties(property_collector PROPERTIES CXX_EXTENSIONS OFF)
+
+include(CTest)
+if(BUILD_TESTING)
+  foreach(test_name IN ITEMS collector_tests foo_only_tests)
+    add_executable(${test_name} ${test_name}.cpp)
+    target_compile_features(${test_name} PRIVATE cxx_std_17)
+    set_target_properties(${test_name} PROPERTIES CXX_EXTENSIONS OFF)
+    add_test(NAME ${test_name} COMMAND ${test_name})
+  endforeach()
+endif()
